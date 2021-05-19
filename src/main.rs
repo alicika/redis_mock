@@ -6,6 +6,17 @@ use std::sync::{Arc, Mutex};
 
 type SharedDb = Arc<Vec<Mutex<HashMap<String, Vec<u8>>>>>;
 
+#[detive(Debug)]
+enum Command {
+    Get {
+        key: String,
+    },
+    Set {
+        key: String,
+        val: Bytes,
+    }
+}
+
 #[tokio::main]
 async fn main() {
     let mut listener = TcpListener::bind("127.0.0.1:6379").await.unwrap();
