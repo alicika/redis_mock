@@ -1,21 +1,11 @@
 use mini_redis::{Connection, Frame};
 use tokio::net::{TcpListener, TcpStream};
+use tokio::sync::mpsc;
 use bytes::Bytes;
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 
 type SharedDb = Arc<Vec<Mutex<HashMap<String, Vec<u8>>>>>;
-
-#[detive(Debug)]
-enum Command {
-    Get {
-        key: String,
-    },
-    Set {
-        key: String,
-        val: Bytes,
-    }
-}
 
 #[tokio::main]
 async fn main() {
