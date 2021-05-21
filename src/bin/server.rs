@@ -4,11 +4,12 @@ use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use tokio::net::{TcpListener, TcpStream};
 
-type SharedDb = Arc<Vec<Mutex<HashMap<String, Vec<u8>>>>>;
+type Db = Arc<Mutex<HashMap<String, Bytes>>>;
+// type SharedDb = Arc<Vec<Mutex<HashMap<String, Vec<u8>>>>>;
 
 #[tokio::main]
 async fn main() {
-    let mut listener = TcpListener::bind("127.0.0.1:6379").await.unwrap();
+    let listener = TcpListener::bind("127.0.0.1:6379").await.unwrap();
 
     let db = Arc::new(Mutex::new(HashMap::new()));
 
