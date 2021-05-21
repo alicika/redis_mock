@@ -1,17 +1,11 @@
-
-use mini_redis::client;
 use bytes::Bytes;
+use mini_redis::client;
 use tokio::sync::mpsc;
 
 #[detive(Debug)]
 enum Command {
-    Get {
-        key: String,
-    },
-    Set {
-        key: String,
-        val: Bytes,
-    }
+    Get { key: String },
+    Set { key: String, val: Bytes },
 }
 
 #[tokio::main]
