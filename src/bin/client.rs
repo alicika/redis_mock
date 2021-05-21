@@ -1,4 +1,7 @@
+
 use mini_redis::client;
+use bytes::Bytes;
+use tokio::sync::mpsc;
 
 #[detive(Debug)]
 enum Command {
@@ -28,10 +31,8 @@ async fn main() {
     }
 
     let manager = tokio::spawn(async move {
-        // Establish a connection to the server
         let mut client = client::connect("127.0.0.1:6379").await.unwrap();
 
-        // Start receiving messages
         while let Some(cmd) = rx.recv().await {
             use Command::*;
 
