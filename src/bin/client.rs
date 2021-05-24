@@ -16,6 +16,7 @@ enum Command {
 }
 
 type Responder<T> = oneshot::Sender<mini_redis::Result<T>>;
+
 #[tokio::main]
 async fn main() {
     let (tx, mut rx) = mpsc::channel(32);
@@ -77,4 +78,18 @@ async fn main() {
     t1.await.unwrap();
     t2.await.unwrap();
     manager.await.unwrap();
+}
+
+use tokio::fs::File;
+use tokio::io::{self, AsyncReadExt};
+
+#[tokio::main]
+async fn main() -> io::Result<()> {
+    let mut f = File::open("foo.txt").await?;
+    let mut buffer = [0; 10];
+
+    let n = f.read(&mut buffer[..]).await?;
+
+    println!("The bytes: {:?}", &buffer[..n]);
+    Ok(())
 }
