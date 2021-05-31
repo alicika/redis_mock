@@ -1,9 +1,9 @@
+use futures::task;
 use std::collections::VecDeque;
 use std::future::Future;
 use std::pin::Pin;
 use std::task::{Context, Poll};
 use std::time::{Duration, Instant};
-use futures::task;
 
 fn main() {
     let mut mini_tokio = MiniTokio::new();
@@ -33,8 +33,8 @@ impl MiniTokio {
     }
 
     fn spawn<F>(&mut self, future: F)
-        where
-            F: Future<Output = ()> + Send + 'static,
+    where
+        F: Future<Output = ()> + Send + 'static,
     {
         self.tasks.push_back(Box::pin(future));
     }
